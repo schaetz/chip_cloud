@@ -23,8 +23,8 @@ class ChipCloudDelegate extends FlowDelegate {
 
   @override
   void paintChildren(FlowPaintingContext context) {
-    debugInfo('Constraints: ' + constraints.toString());
-    debugInfo('Parent container size: ' + context.size.toString());
+    debugInfo('Constraints: $constraints');
+    debugInfo('Parent container size: ${context.size}');
 
     if (context.childCount == 0) {
       debugInfo('No children - nothing to display.');
@@ -32,8 +32,8 @@ class ChipCloudDelegate extends FlowDelegate {
     }
 
     ChipCloudCursor cursor = ChipCloudCursor(options);
-    debugInfo('First row: y=' + cursor.y.toString());
-    debugInfo('First element height: ' + context.getChildSize(0)!.height.toString());
+    debugInfo('First row: y=${cursor.y}');
+    debugInfo('First element height: ${context.getChildSize(0)!.height}');
 
     if (_isElementOverflowingHeight(cursor.y, context.getChildSize(0)!.height)) {
       debugInfo('First element overflows the height of the container, not displaying any elements.');
@@ -41,12 +41,12 @@ class ChipCloudDelegate extends FlowDelegate {
     }
 
     cursor = _determinePositionsForMainElements(context, cursor);
-    debugInfo('Skipped elements: ' + cursor.skippedElements.toString());
+    debugInfo('Skipped elements: ${cursor.skippedElements}');
 
     if (options.showOverflowIndicator && cursor.didSkipElements) {
       final overflowIndicatorIndex = context.childCount - 1;
       Size overflowIndicatorSize = context.getChildSize(overflowIndicatorIndex)!;
-      debugInfo('Overflow indicator size: ' + overflowIndicatorSize.toString());
+      debugInfo('Overflow indicator size: $overflowIndicatorSize');
 
       while (_isElementOverflowingHeight(cursor.y, overflowIndicatorSize.height)) {
         debugInfo('Indicator would overflow container height at y=${cursor.y}. Remove last displayed element.');
@@ -91,24 +91,24 @@ class ChipCloudDelegate extends FlowDelegate {
 
           if (_isElementOverflowingHeight(nextRowCursor.y, elementSize.height)) {
             debugInfo(
-                'Element #${i} would overflow the height constraint in the next row where y=${nextRowCursor.y.toString()}. Skip remaining elements');
+                'Element #$i would overflow the height constraint in the next row where y=${nextRowCursor.y.toString()}. Skip remaining elements');
             cursor.registerSkippedElements(_getMainElementCount(context) - i);
             break;
           } else {
             cursor = nextRowCursor;
-            debugInfo('Next row - y=' + cursor.y.toString());
+            debugInfo('Next row - y=${cursor.y}');
             isOverflowingRow = _isElementOverflowingRowWidth(cursor.x, elementSize.width);
           }
         }
 
         if (cursor.isAtStartOfRow && isOverflowingRow && options.skipLongElements) {
-          debugInfo('Element #${i} does not fit in any row and will be skipped.');
+          debugInfo('Element #$i does not fit in any row and will be skipped.');
           cursor.registerSkippedElements(1);
           continue;
         }
       }
 
-      debugInfo('Element #${i} will be displayed at coordinates: x=${cursor.x}, y=${cursor.y}');
+      debugInfo('Element #$i will be displayed at coordinates: x=${cursor.x}, y=${cursor.y}');
       cursor.registerElementAtCursorPosition(i, elementSize.width);
       cursor.moveToNextColumn(elementSize.width);
     }
