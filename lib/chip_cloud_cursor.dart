@@ -15,10 +15,10 @@ class ChipCloudCursor {
   int _row;
   int _column;
   Point<double> _position;
-  Map<int, Point<double>> _determinedElementPositions;
-  Map<int, int> _elementsPerRow;
-  List<int> _displayedElementsIndices;
-  List<double> _displayedElementsWidth;
+  final Map<int, Point<double>> _determinedElementPositions;
+  final Map<int, int> _elementsPerRow;
+  final List<int> _displayedElementsIndices;
+  final List<double> _displayedElementsWidth;
   int _skippedElements;
 
   int get column => _column;
