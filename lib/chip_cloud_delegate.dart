@@ -125,5 +125,6 @@ class ChipCloudDelegate extends FlowDelegate {
   bool _isElementOverflowingHeight(double offsetY, double elementHeight) =>
       offsetY + elementHeight > constraints.height - options.padding.bottom;
 
+  // ignore: avoid_print
   void debugInfo(String message) => options.debug ? print(message) : {};
 }
