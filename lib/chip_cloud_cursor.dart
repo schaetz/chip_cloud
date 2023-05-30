@@ -21,8 +21,12 @@ class ChipCloudCursor {
   final List<double> _displayedElementsWidth;
   int _skippedElements;
 
+  int get row => _row;
   int get column => _column;
   Map<int, Point<double>> get determinedElementPositions => _determinedElementPositions;
+  Map<int, int> get elementsPerRow => _elementsPerRow;
+  List<int> get displayedElementsIndices => _displayedElementsIndices;
+  List<double> get displayedElementsWidth => _displayedElementsWidth;
   int get skippedElements => _skippedElements;
 
   bool get isAtStartOfRow => _column == 0;
@@ -42,27 +46,35 @@ class ChipCloudCursor {
         _skippedElements = 0;
 
   ChipCloudCursor.initializeWith(
-      this.options,
-      this._row,
-      this._column,
-      this._position,
-      this._determinedElementPositions,
-      this._elementsPerRow,
-      this._displayedElementsIndices,
-      this._displayedElementsWidth,
-      this._skippedElements);
+      {this.options = const ChipCloudOptions(),
+      int row = 0,
+      int column = 0,
+      Point<double>? position,
+      Map<int, Point<double>> determinedElementPositions = const {},
+      Map<int, int> elementsPerRow = const {},
+      List<int> displayedElementsIndices = const [],
+      List<double> displayedElementsWidth = const [],
+      int skippedElements = 0})
+      : _row = row,
+        _column = column,
+        _position = position != null ? position! : Point(options.padding.left, options.padding.top),
+        _determinedElementPositions = determinedElementPositions,
+        _elementsPerRow = elementsPerRow,
+        _displayedElementsIndices = displayedElementsIndices,
+        _displayedElementsWidth = displayedElementsWidth,
+        _skippedElements = skippedElements;
 
   ChipCloudCursor clone() {
     return ChipCloudCursor.initializeWith(
-        options,
-        _row,
-        _column,
-        Point(this.x, this.y),
-        Map.from(_determinedElementPositions),
-        Map.from(_elementsPerRow),
-        List.from(_displayedElementsIndices),
-        List.from(_displayedElementsWidth),
-        _skippedElements);
+        options: options,
+        row: _row,
+        column: _column,
+        position: Point(_position.x, _position.y),
+        determinedElementPositions: Map.from(_determinedElementPositions),
+        elementsPerRow: Map.from(_elementsPerRow),
+        displayedElementsIndices: List.from(_displayedElementsIndices),
+        displayedElementsWidth: List.from(_displayedElementsWidth),
+        skippedElements: _skippedElements);
   }
 
   void moveToNextColumn(double currentElementWidth) {
@@ -104,7 +116,7 @@ class ChipCloudCursor {
 
     final nextToLastElementIndex = _displayedElementsIndices.last;
     final nextToLastElementPosition = _determinedElementPositions[nextToLastElementIndex]!;
-    final nextToLastElementWidth = _displayedElementsWidth[nextToLastElementIndex]!;
+    final nextToLastElementWidth = _displayedElementsWidth.last;
 
     _position = nextToLastElementPosition + Point(nextToLastElementWidth + options.elementSpacing, 0);
   }
