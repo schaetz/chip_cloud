@@ -33,10 +33,10 @@ class ChipCloud<T> extends StatelessWidget {
     return elements;
   }
 
-  Widget buildElement<T>(T dataSet, {Color? backgroundColor}) {
+  Widget buildElement<D>(D dataSet, {Color? backgroundColor}) {
     return Chip(
-      label: Text(T == String ? dataSet as String : dataSet.toString()),
-      labelStyle: TextStyle(fontSize: 14.0),
+      label: Text(D == String ? dataSet as String : dataSet.toString()),
+      labelStyle: const TextStyle(fontSize: 14.0),
       backgroundColor: backgroundColor,
     );
   }

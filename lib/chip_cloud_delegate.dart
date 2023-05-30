@@ -16,7 +16,7 @@ class ChipCloudDelegate extends FlowDelegate {
   ChipCloudDelegate(this.constraints, {this.options = const ChipCloudOptions()});
 
   @override
-  Size getSize(BoxConstraints _) => constraints;
+  Size getSize(BoxConstraints constraints) => this.constraints;
 
   @override
   bool shouldRepaint(covariant FlowDelegate oldDelegate) => false;

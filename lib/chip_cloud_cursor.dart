@@ -57,7 +57,7 @@ class ChipCloudCursor {
       int skippedElements = 0})
       : _row = row,
         _column = column,
-        _position = position != null ? position! : Point(options.padding.left, options.padding.top),
+        _position = position ?? Point(options.padding.left, options.padding.top),
         _determinedElementPositions = determinedElementPositions,
         _elementsPerRow = elementsPerRow,
         _displayedElementsIndices = displayedElementsIndices,
