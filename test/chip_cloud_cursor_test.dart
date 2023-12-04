@@ -59,6 +59,19 @@ void main() {
       expect(cursor.column, 8);
     });
 
+    test('moving the cursor to the next row should change the y position and set the column counter to 0', () {
+      const options = ChipCloudOptions(elementSpacing: 5, rowSpacing: 7);
+      final cursor =
+          ChipCloudCursor.initializeWith(options: options, position: const Point(30, 200), column: 7, row: 5);
+      const previousElementHeight = 12.0;
+
+      cursor.moveToNextRow(previousElementHeight);
+      expect(cursor.x, 0);
+      expect(cursor.y, 219); // 200 + 12 + 7
+      expect(cursor.column, 0);
+      expect(cursor.row, 6);
+    });
+
     test('calling registerElementAtCursorPosition() should update all four related collections', () {
       final cursor = ChipCloudCursor.initializeWith(
           options: defaultOptions,
